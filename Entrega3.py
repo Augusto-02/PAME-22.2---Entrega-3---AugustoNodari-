@@ -76,9 +76,15 @@ class Projeto:
       def RemoverProjeto(self):
             nome = input("Digite o nome do projeto que quer deletar: ")
             area = input("Digite a area do projeto: ")
+            
             for el in self.listaproj:
-                  if (el[0]== nome) and (el[1]== area):
+                  print(el[0], el[1])
+                  if el[0] == nome and el[1] == area:
+                        print(el[0], el[1])
                         self.listaproj.remove(el)
+                        print("Sucesso")
+                        return self.listaproj
+            print("Nao foi possivel remover o projeto")
             return self.listaproj
       
       
@@ -486,7 +492,7 @@ class Sistema(Projeto, Consultor, Gerente):
       
       
       
-sistema1 = Sistema("Deslogado",[["GUGU","GU","BABA","Desenvolvimento"]],[["AUG","Augusto","BABA","Desenvolvimento"]],[["Flemis", "Desenvolimento", ["GUGU", "UG"],"AUG", 0],["FLU", "Identidade Visual", ["GUGU", "UG"], "AUG", 6]])
+sistema1 = Sistema("Deslogado",[["GUGU","GU","BABA","Desenvolvimento"]],[["AUG","Augusto","BABA","Desenvolvimento"]],[["Flemis", "Desenvolvimento", ["GUGU", "UG"],"AUG", 0],["FLU", "Identidade Visual", ["GUGU", "UG"], "AUG", 6]])
 sistema1.main()
 
 
