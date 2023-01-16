@@ -94,10 +94,11 @@ class Gerente():
              self.senha = senha
              self.listgerentes = listgerentes
              
-      def  VerDados(self, id, nome, area, senha):
-            if self.status == "Logado consultor" or self.status == "Logado Gerente":
+      def VerDados(self, id, nome, area, senha):
+            print(self.status)
+            if self.status == "Logado consultor" or self.status == "Logado gerente":
                   print(f'ID: {id}, Nome: {nome}, area: {area}, senha: {senha}')
-            input("Digite enter para continuar")
+                  input("Digite enter para continuar")
       
       def ModificarDados(self):
         
@@ -160,7 +161,10 @@ class Sistema(Projeto, Consultor, Gerente):
                   if opcao == "1":
                         self.id, self.usuario, self.senha, self.area = self.Login()
                         
-                        if self.status == "Logado consultor":
+                        if self.status == "Deslogado":
+                              pass
+                        
+                        elif self.status == "Logado consultor":
                               self.MenuConsultor()
                               
                         elif self.status == "Logado gerente":
@@ -188,6 +192,8 @@ class Sistema(Projeto, Consultor, Gerente):
                   
       def MenuConsultor(self):
             while True:
+                  if self.status == "Deslogado":
+                        break
                   PrintMenuConsultor()
                   opcao = input("Digite uma opcao: ")
                   if opcao == "1":
@@ -207,10 +213,13 @@ class Sistema(Projeto, Consultor, Gerente):
                   if opcao == "5":
                         self.PedirRetiradaDoProjeto()
                   if opcao == "6":
+                        self.status = "Deslogado"
                         break
                   
       def MenuGerente(self):
             while True:
+                  if self.status == "Deslogado":
+                        break
                   PrintMenuGerente()
                   opcao = input("Digite uma opcao: ")
                   if opcao == "1":
@@ -234,6 +243,7 @@ class Sistema(Projeto, Consultor, Gerente):
                   if opcao == "7":
                         self.listaproj = self.EntregarProjeto()
                   if opcao == "8":
+                        self.status = "Deslogado"
                         break            
       
       def Listagem(self):
@@ -332,21 +342,21 @@ class Sistema(Projeto, Consultor, Gerente):
             id = input("Digite o ID do usuario: ")
             senha = input("Digite a senha: ")
             for el in self.listconsultores:
-                  if el[0]==id and el[2]==senha:
+                  if el[0]== id and el[2]== senha:
                         self.status = "Logado consultor"
                         print("Logado como consultor com sucesso")
                         print()
                         return el[0], el[1], el[2], el[3]
             for el in self.listgerentes:
-                  if el[0]==id and el[2]==senha:
+                  if el[0]== id and el[2]== senha:
                         self.status = "Logado gerente"
                         print("Logado como gerente com sucesso")
                         print()
                         return el[0], el[1], el[2], el[3]
-            else: 
-                  print("Login invalido")
-                  self.status == "Deslogado"
-                  return "", "", "", ""   
+             
+            print("Login invalido")
+            self.status == "Deslogado"
+            return " ", " ", " ", " "   
                     
       def AvancarProjetos(self):
             if self.status == "Logado consultor":
@@ -371,10 +381,16 @@ class Sistema(Projeto, Consultor, Gerente):
                   input("Digite enter para continuar")
       
       def PermitirRetirada(self):
+            lista = []
             if self.status == "Logado gerente":
                   for el in self.listaretiradas:
                         if self.id == el[0]:
                               print(f'Nome do Projeto: {el[1]}, Nome do consultor: {el[2]}')
+                              lista += [el[1]]
+                  if len(lista) == 0:
+                        print("Nao tem projetos para avancar no momento")
+                        return self.listaproj
+                              
                   nomeproj = input("Digite o nome do projeto que deseja analisar dar o aval da retirada do consultor: ")
                   nomeconsultor = input("Digite o nome do consultor que deseja retirar do projeto: ")
                   for el in self.listaretiradas:
