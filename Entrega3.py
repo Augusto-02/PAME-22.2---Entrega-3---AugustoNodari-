@@ -78,11 +78,9 @@ class Projeto:
             area = input("Digite a area do projeto: ")
             
             for el in self.listaproj:
-                  print(el[0], el[1])
                   if el[0] == nome and el[1] == area:
-                        print(el[0], el[1])
                         self.listaproj.remove(el)
-                        print("Sucesso")
+                        print("Projeto removido com sucesso")
                         return self.listaproj
             print("Nao foi possivel remover o projeto")
             return self.listaproj
